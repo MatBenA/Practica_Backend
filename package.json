@@ -1,0 +1,23 @@
+{
+  "name": "backend-mvc",
+  "version": "1.0.0",
+  "description": "proyecto backend de patron mvc",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MatBenA/Practica_Backend.git"
+  },
+  "author": "Benegas Matías Adrián (MatBenA)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatBenA/Practica_Backend/issues"
+  },
+  "homepage": "https://github.com/MatBenA/Practica_Backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sql": "^0.78.0"
+  }
+}

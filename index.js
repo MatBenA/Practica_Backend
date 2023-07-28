@@ -1,11 +1,13 @@
-require("rootpath")();
 const express = require("express");
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const config = require("./config.json");
 
-const config = require("config.json");
+const personController = require("./controller/personController.js");
+
+app.use(personController);
 
 app.listen(config.server.port, (err) => {
     if (err) {

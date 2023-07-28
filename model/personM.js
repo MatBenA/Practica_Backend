@@ -35,11 +35,17 @@ personDB.create = function (newData, callBackCreate) {
 };
 
 personDB.update = function (dni, updatedData, callBackUpdate) {
-    const queryUpdate =
-        `UPDATE persona SET dni = ?, nombre = ?, apellido = ? WHERE dni = ${dni};`
+    const queryUpdate = `UPDATE persona SET dni = ?, nombre = ?, apellido = ? WHERE dni = ${dni};`;
 
     connection.query(queryUpdate, updatedData, (err, result) => {
         callBackUpdate(err, result);
+    });
+};
+
+personDB.delete = function (dni, callBackDelete) {
+    const queryDelete = "DELETE FROM persona WHERE dni = ?;";
+    connection.query(queryDelete, dni, (err, result) => {
+            callBackDelete(err, result);
     });
 };
 

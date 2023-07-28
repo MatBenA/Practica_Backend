@@ -17,7 +17,7 @@ app.get("/api/persona", (req, res) => {
 
 app.post("/api/persona", (req, res) => {
     const newData = Object.values(req.body);
-    personDB.create(newData, (err, newData) => {
+    personDB.create(newData, (err) => {
         if (err) {
             res.status(500).send(err);
             throw err;
@@ -36,13 +36,30 @@ app.put("/api/persona/:dni", (req, res) => {
         if (err) {
             res.status(500).send(err);
             throw err;
-        }
-        if (result.affectedRows === 0) {
-            res.status(404).send(`Error: Persona no encontrada por el dni ${dni}`)
+        } else if (result.affectedRows === 0) {
+            res.status(404).send(
+                `Error: No se encontró persona con el dni: ${dni}.`
+            );
         } else {
             res.send(
                 `persona con actualizada con éxito. Nuevos datos: ${updatedData}`
             );
+        }
+    });
+});
+
+app.delete("/api/persona/:dni", (req, res) => {
+    const dni = req.params.dni;
+    personDB.delete(dni, (err, result) => {
+        if (err) {
+            res.status(500).send(err);
+            throw err;
+        } else if (result.affectedRows === 0) {
+            res.status(404).send(
+                `Error: No se encontró persona con el dni: ${dni}.`
+            );
+        } else {
+            res.send(`Persona eliminada con el dni: ${dni}`);
         }
     });
 });

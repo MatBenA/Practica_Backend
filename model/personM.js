@@ -29,7 +29,18 @@ personDB.create = function (newData, callBackCreate) {
     const createPerson =
         "INSERT INTO persona (dni, nombre, apellido) VALUES (?,?,?);";
 
-    connection.query(createPerson, newData, err => callBackCreate(err, newData));
+    connection.query(createPerson, newData, (err) =>
+        callBackCreate(err, newData)
+    );
+};
+
+personDB.update = function (dni, updatedData, callBackUpdate) {
+    const queryUpdate =
+        `UPDATE persona SET dni = ?, nombre = ?, apellido = ? WHERE dni = ${dni};`
+
+    connection.query(queryUpdate, updatedData, (err, result) => {
+        callBackUpdate(err, result);
+    });
 };
 
 module.exports = personDB;

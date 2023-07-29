@@ -17,11 +17,7 @@ const personDB = {};
 personDB.getAll = function (callbackPerson) {
     const allPersonsQuery = "SELECT * FROM persona";
     connection.query(allPersonsQuery, (err, rows) => {
-        if (err) {
-            callbackPerson(err);
-        } else {
-            callbackPerson(undefined, rows);
-        }
+            callbackPerson(err, rows);
     });
 };
 

@@ -6,8 +6,10 @@ app.use(express.urlencoded({ extended: true }));
 const config = require("./config.json");
 
 const personController = require("./controller/personController.js");
+const userController = require("./controller/userController");
 
 app.use(personController);
+app.use(userController);
 
 app.listen(config.server.port, (err) => {
     if (err) {

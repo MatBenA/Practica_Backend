@@ -34,10 +34,25 @@ app.put("/api/users/:mail", (req, res) => {
     userDB.update(updatedData, (err, results) => {
         if (err) {
             res.status(500).send(err);
+            throw err;
         } else if (results.affectedRows === 0) {
             res.status(404).send(`No se encontró usuario con el mail ${mail}`);
         } else {
             res.send(`Se actualizó el usuario con los datos: ${updatedData}`);
+        }
+    });
+});
+
+app.delete("/api/users/:mail", (req, res) => {
+    const mail = req.params.mail;
+    userDB.delete(mail, (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+            throw err;
+        } else if (results.affectedRows === 0) {
+            res.status(404).send(`No se encontró usuario con el mail ${mail}`);
+        } else {
+            res.send(`Se eliminó el usario con el mail: ${mail}`);
         }
     });
 });

@@ -35,4 +35,12 @@ userDB.update = function (updatedData, callBackUpdate) {
         callBackUpdate(err, results);
     });
 };
+
+userDB.delete = function (mail, callBackDelete) {
+    const queryDelete = `DELETE FROM usuario WHERE mail = ?`;
+    connection.query(queryDelete, mail, (err, results) => {
+        callBackDelete(err, results);
+    });
+};
+
 module.exports = userDB;

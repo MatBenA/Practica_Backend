@@ -16,7 +16,6 @@ app.get("/api/users", (req, res) => {
 });
 
 app.post("/api/users", (req, res) => {
-    console.log(req.body);
     const newUser = Object.values(req.body);
     userDB.create(newUser, (err) => {
         if (err) {
@@ -24,6 +23,21 @@ app.post("/api/users", (req, res) => {
             throw err;
         } else {
             res.send(`Se agregó el usuario con el mail: ${newUser[0]}`);
+        }
+    });
+});
+
+app.put("/api/users/:mail", (req, res) => {
+    const mail = req.params.mail;
+    const updatedData = Object.values(req.body);
+    updatedData.push(mail);
+    userDB.update(updatedData, (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+        } else if (results.affectedRows === 0) {
+            res.status(404).send(`No se encontró usuario con el mail ${mail}`);
+        } else {
+            res.send(`Se actualizó el usuario con los datos: ${updatedData}`);
         }
     });
 });

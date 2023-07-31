@@ -42,4 +42,11 @@ userDB.delete = function (mail, callBackDelete) {
     });
 };
 
+userDB.getByEmail = function (email, callBackEmail) {
+    const queryEmail = "SELECT * FROM usuario WHERE mail = ?;";
+    connection.query(queryEmail, email, (err, result) => {
+        callBackEmail(err, result);
+    });
+};
+
 module.exports = userDB;

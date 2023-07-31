@@ -10,9 +10,9 @@ app.get("/api/persona", (req, res) => {
         personDB.getByApellido(apellido, (err, results) => {
             if (err) {
                 res.status(500).send(err);
-            } else if (results.affectedRows === 0) {
+            } else if (results.length === 0) {
                 res.status(404).send(
-                    `No se encontró persona con el apellido ${apellido}`
+                    `No se encontró persona con el apellido: ${apellido}`
                 );
             } else {
                 res.send(results);

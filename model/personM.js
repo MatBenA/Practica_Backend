@@ -52,4 +52,12 @@ personDB.getByApellido = function (apellido, callBackApellido) {
     );
 };
 
+personDB.getUser = function (dni, callBackUser) {
+    const queryNickname =
+        "SELECT nickname FROM usuario INNER JOIN persona ON persona.dni = usuario.persona WHERE persona.dni = ?;";
+    connection.query(queryNickname, dni, (err, results) => {
+        callBackUser(err, results);
+    });
+};
+
 module.exports = personDB;

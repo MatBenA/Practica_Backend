@@ -22,7 +22,6 @@ app.get("/api/persona", (req, res) => {
         personDB.getAll((err, rows) => {
             if (err) {
                 res.status(500).send(err);
-                throw err;
             } else {
                 res.json(rows);
             }
@@ -35,7 +34,6 @@ app.post("/api/persona", (req, res) => {
     personDB.create(newData, (err) => {
         if (err) {
             res.status(500).send(err);
-            throw err;
         } else {
             res.send(
                 `se agregó una nueva persona con los siguientes datos ${newData}`
@@ -50,7 +48,6 @@ app.put("/api/persona/:dni", (req, res) => {
     personDB.update(dni, updatedData, (err, result) => {
         if (err) {
             res.status(500).send(err);
-            throw err;
         } else if (result.affectedRows === 0) {
             res.status(404).send(
                 `Error: No se encontró persona con el dni: ${dni}.`
@@ -68,7 +65,6 @@ app.delete("/api/persona/:dni", (req, res) => {
     personDB.delete(dni, (err, result) => {
         if (err) {
             res.status(500).send(err);
-            throw err;
         } else if (result.affectedRows === 0) {
             res.status(404).send(
                 `Error: No se encontró persona con el dni: ${dni}.`

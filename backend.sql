@@ -14,3 +14,7 @@ create table usuario (
     password VARCHAR(20) NOT NULL,
     PRIMARY KEY (mail)
 );
+
+ALTER TABLE usuario
+    ADD persona INT,
+    ADD CONSTRAINT FOREIGN KEY(persona) REFERENCES persona(dni);

@@ -22,7 +22,7 @@ userDB.getAll = function (callBackUsers) {
 
 userDB.create = function (newUser, callBackCreate) {
     const createQuery =
-        "INSERT INTO usuario (mail, nickname, password) VALUES (?,?,?);";
+        "INSERT INTO usuario (mail, nickname, password, persona) VALUES (?,?,?,?);";
     connection.query(createQuery, newUser, (err) => {
         callBackCreate(err, newUser);
     });

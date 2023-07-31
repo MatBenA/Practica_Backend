@@ -31,10 +31,21 @@ app.get("/api/users", (req, res) => {
 
 app.post("/api/users", (req, res) => {
     const newUser = Object.values(req.body);
+    
+    //En la posición 3 iría el dni de la persona, pero caso de que no se envíe ningún dni
+    //simplemente se le asignará el valor nulo a esta posicion.
+    if (!newUser[3]) {
+        newUser[3] = null;
+    }
+
     userDB.create(newUser, (err) => {
-        if (err) {
+        if(err.code === "ER_DUP_ENTRY"){
+            res.status(409).send("Error: ya existe un usuario con este e-mail")
+        }
+        else if(err) {
             res.status(500).send(err);
-        } else {
+        } 
+        else {
             res.send(`Se agregó el usuario con el mail: ${newUser[0]}`);
         }
     });

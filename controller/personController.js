@@ -32,7 +32,9 @@ app.get("/api/persona", (req, res) => {
 app.post("/api/persona", (req, res) => {
     const newData = Object.values(req.body);
     personDB.create(newData, (err) => {
-        if (err) {
+        if (err.code === "ER_DUP_ENTRY") {
+            res.status(409).send("Error: ya existe un usuario con este dni");
+        } else if (err) {
             res.status(500).send(err);
         } else {
             res.send(

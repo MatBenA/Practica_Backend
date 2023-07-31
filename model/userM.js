@@ -1,7 +1,6 @@
 require("rootpath")();
 const mysql = require("mysql");
 const config = require("config.json");
-const { use } = require("../controller/personController");
 
 const connection = mysql.createConnection(config.database);
 connection.connect((err) => {

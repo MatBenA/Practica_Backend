@@ -5,14 +5,29 @@ const app = express();
 const personDB = require("model/personM.js");
 
 app.get("/api/persona", (req, res) => {
-    personDB.getAll((err, rows) => {
-        if (err) {
-            res.status(500).send(err);
-            throw err;
-        } else {
-            res.json(rows);
-        }
-    });
+    if (req.query.apellido) {
+        const apellido = req.query.apellido;
+        personDB.getByApellido(apellido, (err, results) => {
+            if (err) {
+                res.status(500).send(err);
+            } else if (results.affectedRows === 0) {
+                res.status(404).send(
+                    `No se encontró persona con el apellido ${apellido}`
+                );
+            } else {
+                res.send(results);
+            }
+        });
+    } else {
+        personDB.getAll((err, rows) => {
+            if (err) {
+                res.status(500).send(err);
+                throw err;
+            } else {
+                res.json(rows);
+            }
+        });
+    }
 });
 
 app.post("/api/persona", (req, res) => {

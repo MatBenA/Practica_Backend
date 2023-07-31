@@ -17,7 +17,7 @@ const personDB = {};
 personDB.getAll = function (callbackPerson) {
     const allPersonsQuery = "SELECT * FROM persona";
     connection.query(allPersonsQuery, (err, rows) => {
-            callbackPerson(err, rows);
+        callbackPerson(err, rows);
     });
 };
 
@@ -41,8 +41,15 @@ personDB.update = function (dni, updatedData, callBackUpdate) {
 personDB.delete = function (dni, callBackDelete) {
     const queryDelete = "DELETE FROM persona WHERE dni = ?;";
     connection.query(queryDelete, dni, (err, result) => {
-            callBackDelete(err, result);
+        callBackDelete(err, result);
     });
+};
+
+personDB.getByApellido = function (apellido, callBackApellido) {
+    const queryApellido = "SELECT * FROM persona WHERE apellido = ?;";
+    connection.query(queryApellido, apellido, (err, results) =>
+        callBackApellido(err, results)
+    );
 };
 
 module.exports = personDB;

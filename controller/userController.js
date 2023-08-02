@@ -56,6 +56,9 @@ app.post("/api/users", (req, res) => {
 app.put("/api/users/:mail", (req, res) => {
     const mail = req.params.mail;
     const updatedData = Object.values(req.body);
+    if(!updatedData[3]){
+        updatedData[3] = null;
+    }
     updatedData.push(mail);
     userDB.update(updatedData, (err, results) => {
         if (err) {
@@ -63,7 +66,7 @@ app.put("/api/users/:mail", (req, res) => {
         } else if (results.affectedRows === 0) {
             res.status(404).send(`No se encontró usuario con el mail ${mail}`);
         } else {
-            res.send(`Se actualizó el usuario con los datos: ${updatedData}`);
+            res.send(`Se actualizó el usuario correctamente`);
         }
     });
 });

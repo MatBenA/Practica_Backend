@@ -29,7 +29,7 @@ userDB.create = function (newUser, callBackCreate) {
 };
 
 userDB.update = function (updatedData, callBackUpdate) {
-    const queryUpdate = `UPDATE usuario SET mail = ?, nickname = ?, password = ? WHERE mail = ?;`;
+    const queryUpdate = `UPDATE usuario SET mail = ?, nickname = ?, password = ?, persona = ? WHERE mail = ?;`;
     connection.query(queryUpdate, updatedData, (err, results) => {
         callBackUpdate(err, results);
     });

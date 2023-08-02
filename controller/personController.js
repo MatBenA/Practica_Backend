@@ -46,7 +46,7 @@ app.post("/api/persona", (req, res) => {
         if (err) {
             if (err.code === "ER_DUP_ENTRY") {
                 res.status(409).send(
-                    "Error: ya existe un usuario con este dni"
+                    "Error: ya existe una persona con este dni"
                 );
             } else if (err) {
                 res.status(500).send(err);
@@ -85,6 +85,7 @@ app.delete("/api/persona/:dni", (req, res) => {
                 res.status(500).send(
                     "ER_ROW_IS_REFERENCED_2\n esta persona posee uno o más usuarios \nsi desea eliminar esta persona primero elimine su/s usurio/s"
                 );
+                return;
             }
         }
         if (result.affectedRows === 0) {

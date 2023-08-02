@@ -1,7 +1,12 @@
+//El objetivo de este archivo modelo persona es el de interactuar
+//con la base de datos y enviar los resultados al controlador
+
+//configuracion inicial
 require("rootpath")();
 const mysql = require("mysql");
 const config = require("config.json");
 
+//Se inicia la coneccion con la base de datos
 const connection = mysql.createConnection(config.database);
 
 connection.connect((err) => {
@@ -12,6 +17,7 @@ connection.connect((err) => {
     }
 });
 
+//en este objeto se almacenaran los métodos CRUD que serán exportados
 const personDB = {};
 
 personDB.getAll = function (callbackPerson) {

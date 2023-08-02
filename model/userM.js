@@ -1,7 +1,12 @@
+//El objetivo de este archivo modelo usuario es el de interactuar
+//con la base de datos y enviar los resultados al controlador
+
+//configuracion inicial
 require("rootpath")();
 const mysql = require("mysql");
 const config = require("config.json");
 
+//Se inicia la coneccion con la base de datos
 const connection = mysql.createConnection(config.database);
 connection.connect((err) => {
     if (err) {
@@ -11,6 +16,7 @@ connection.connect((err) => {
     console.log(`Conectado con la id: ${connection.threadId}`);
 });
 
+//en este objeto se almacenaran los métodos CRUD que serán exportados
 const userDB = {};
 
 userDB.getAll = function (callBackUsers) {

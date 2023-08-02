@@ -1,10 +1,17 @@
+//El objetivo de este archivo controlador es el de recibir solicitudes
+//y enviar respuestas
+
+//configuracion de inicial de roothpath y express
 require("rootpath")();
 const express = require("express");
 const app = express();
 
+//importacion de los métodos del modelo usuario que se encargará de interactuar con la base de datos
 const userDB = require("model/userM.js");
 
+//Método GET encargado de recibir peticiones de datos y enviar resultados
 app.get("/api/users", (req, res) => {
+    //en el caso de haber una query email se devolverá los datos del usuario con el que coincida
     if (req.query.email) {
         const email = req.query.email;
         userDB.getByEmail(email, (err, results) => {
@@ -18,6 +25,7 @@ app.get("/api/users", (req, res) => {
                 res.send(results);
             }
         });
+    //Se devolverán los datos de todos los usuarios
     } else {
         userDB.getAll((err, rows) => {
             if (err) {
@@ -29,6 +37,7 @@ app.get("/api/users", (req, res) => {
     }
 });
 
+//Método POST por el que se crea un nuevo usuario
 app.post("/api/users", (req, res) => {
     const newUser = Object.values(req.body);
 
@@ -53,10 +62,11 @@ app.post("/api/users", (req, res) => {
     });
 });
 
+//Método PUT encargado de acutalizar datos de un usuario dado su mail
 app.put("/api/users/:mail", (req, res) => {
     const mail = req.params.mail;
     const updatedData = Object.values(req.body);
-    if(!updatedData[3]){
+    if(!updatedData[3]){ //en el caso de no enviarse un dni se le asignara el valor nulo
         updatedData[3] = null;
     }
     updatedData.push(mail);
@@ -71,6 +81,7 @@ app.put("/api/users/:mail", (req, res) => {
     });
 });
 
+//Método DELETE encargado de borrar un usuario dado su mail
 app.delete("/api/users/:mail", (req, res) => {
     const mail = req.params.mail;
     userDB.delete(mail, (err, results) => {

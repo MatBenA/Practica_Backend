@@ -1,10 +1,17 @@
+//El objetivo de este archivo controlador es el de recibir solicitudes
+//y enviar respuestas
+
+//configuracion de inicial de roothpath y express
 require("rootpath")();
 const express = require("express");
 const app = express();
 
+//importacion de los métodos del modelo persona que se encargará de interactuar con la base de datos
 const personDB = require("model/personM.js");
 
+//en este metodo get se manejan todas las peticiones de informacion
 app.get("/api/persona", (req, res) => {
+    //en el caso de haber una query apellido se devolveran usuarios con el apellido especificado
     if (req.query.apellido) {
         const apellido = req.query.apellido;
         personDB.getByApellido(apellido, (err, results) => {
@@ -18,6 +25,7 @@ app.get("/api/persona", (req, res) => {
                 res.send(results);
             }
         });
+        //en el caso de que se busque el nickname de una persona se usará su dni como parametro query de búsqueda
     } else if (req.query.UserOfDni) {
         const dni = req.query.UserOfDni;
         personDB.getUser(dni, (err, results) => {
@@ -29,6 +37,7 @@ app.get("/api/persona", (req, res) => {
                 res.send(results);
             }
         });
+        //se devolveran todas las personas con su información
     } else {
         personDB.getAll((err, rows) => {
             if (err) {
@@ -40,8 +49,9 @@ app.get("/api/persona", (req, res) => {
     }
 });
 
+//Método POST que por medio del cual se crean una nueva persona
 app.post("/api/persona", (req, res) => {
-    const newData = Object.values(req.body);
+    const newData = Object.values(req.body); //transforma los valores del objeto body en un array
     personDB.create(newData, (err) => {
         if (err) {
             if (err.code === "ER_DUP_ENTRY") {
@@ -59,6 +69,7 @@ app.post("/api/persona", (req, res) => {
     });
 });
 
+//Método PUT por medio del cual se actualiza los de una persona dado su DNI
 app.put("/api/persona/:dni", (req, res) => {
     const dni = req.params.dni;
     const updatedData = Object.values(req.body);
@@ -77,6 +88,7 @@ app.put("/api/persona/:dni", (req, res) => {
     });
 });
 
+//Método DELETE por el cual se borra una persona dado su DNI
 app.delete("/api/persona/:dni", (req, res) => {
     const dni = req.params.dni;
     personDB.delete(dni, (err, result) => {
